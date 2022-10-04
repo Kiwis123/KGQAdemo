@@ -8,7 +8,8 @@ from markdownify import markdownify as md
 p = 'data/medical/lookup/Diseases.txt'
 disease_names = [i.strip() for i in open(p, 'r', encoding='UTF-8').readlines()]
 # default neo4j account should be user="neo4j", password="neo4j"
-graph = Graph(host="localhost", http_port=7474, user="neo4j", password="123456")
+# graph = Graph(host="localhost", http_port=7474, user="neo4j", password="123456")
+graph = Graph('http://localhost:7474/', auth=('neo4j', '123456'))
 
 
 def retrieve_disease_name(name):
@@ -23,7 +24,7 @@ def retrieve_disease_name(name):
 
 
 def make_button(title, payload):
-    return {'title': title, 'payload': payload}
+    return {'payload': payload, 'title': title}
 
 
 class ActionEcho(Action):
@@ -121,7 +122,8 @@ class ActionSearchTreat(Action):
             buttons = []
             for d in possible_diseases:
                 buttons.append(make_button(d, '/search_treat{{"disease":"{0}", "sure":"{1}"}}'.format(d, d)))
-            dispatcher.utter_button_message("请点击选择想查询的疾病，若没有想要的，请忽略此消息", buttons)
+            # dispatcher.utter_button_message("请点击选择想查询的疾病，若没有想要的，请忽略此消息", buttons)
+            dispatcher.utter_message(text="请点击选择想查询的疾病，若没有想要的，请忽略此消息", buttons=buttons)
         else:
             dispatcher.utter_message("知识库中暂无与 {0} 疾病相关的记录".format(disease))
         return []
