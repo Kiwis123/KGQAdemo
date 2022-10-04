@@ -17,25 +17,12 @@ pipeline:
 
 
 policies:
-#- name: "TEDPolicy"
-#  epochs: 50
-#- name: "MemoizationPolicy"
-#  max_history: 5
-#- name: "RulePolicy"
-- name: TEDPolicy
-  epochs: 120
-  featurizer:
-  - name: MaxHistoryTrackerFeaturizer
-    max_history: 5
-    state_featurizer:
-    - name: BinarySingleStateFeaturizer
-- name: rasa.core.policies.memoization.MemoizationPolicy
+- name: "TEDPolicy"
+  epochs: 50
+- name: "MemoizationPolicy"
   max_history: 5
-- name: rasa.core.policies.mapping_policy.MappingPolicy
-- name: rasa.core.policies.fallback.FallbackPolicy
-  nlu_threshold: 0.4
-  core_threshold: 0.3
-  fallback_action_name: action_donknow
+- name: "RulePolicy"
+
 
 # featurizer:
 # - name: MaxHistoryTrackerFeaturizer
